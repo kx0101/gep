@@ -64,7 +64,10 @@ func DownloadAndSaveFireImage(fireImageUrl string) {
 		log.Fatalf("Error: received non-200 status code %d while fetching image", imgResponse.StatusCode)
 	}
 
-	file, err := os.Create("images/fire.jpg")
+	today = time.Now().Format("02-01-2006")
+	filename := fmt.Sprintf("images/%s-fire.jpg", today)
+
+	file, err := os.Create(filename)
 	if err != nil {
 		log.Fatalf("Error creating file: %v", err)
 	}
@@ -75,5 +78,6 @@ func DownloadAndSaveFireImage(fireImageUrl string) {
 		log.Fatalf("Error saving image: %v", err)
 	}
 
-	fmt.Println("Fire image saved as images/fire.jpg")
+	fmt.Printf("Fire image saved as %s", filename)
+    fmt.Println()
 }

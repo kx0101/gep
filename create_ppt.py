@@ -1,14 +1,18 @@
 from pptx import Presentation
 from pptx.util import Inches
+from datetime import datetime, timedelta
 
 def create_presentation():
     prs = Presentation()
 
+    today = datetime.now()
+    tomorrow = today + timedelta(days=1)
+
     screenshots = [
-            'images/weather-today.png',
-            'images/weather-tomorrow.png',
-            'images/fire.jpg', 
-            ]
+        f'images/{today.strftime("%d-%m-%Y")}.png',
+        f'images/{tomorrow.strftime("%d-%m-%Y")}.png',
+        f'images/{today.strftime("%d-%m-%Y")}-fire.jpg',
+    ]
 
     for screenshot in screenshots:
         slide_layout = prs.slide_layouts[5]
