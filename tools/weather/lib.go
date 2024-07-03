@@ -62,6 +62,9 @@ func fullScreenshot(url, sel string, res *[]byte) chromedp.Tasks {
 		chromedp.Navigate(url),
 		chromedp.WaitVisible(sel, chromedp.ByQuery),
 		chromedp.Evaluate(`document.querySelector(".fc-consent-root").remove()`, nil),
+        chromedp.Evaluate(`document.querySelectorAll(".weather-now .graph-btn").forEach(e => e.remove())`, nil),
+		chromedp.Evaluate(`document.querySelectorAll(".weather-now .graph").forEach(e => e.remove())`, nil),
+		chromedp.Evaluate(`document.querySelector(".table-menu").remove()`, nil),
 		chromedp.Sleep(time.Second * 2),
 		chromedp.Screenshot(sel, res, chromedp.NodeVisible, chromedp.ByQuery),
 	}
