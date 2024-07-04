@@ -2,19 +2,9 @@ from pptx import Presentation
 from pptx.util import Inches
 from datetime import datetime, timedelta
 from pptx.oxml import parse_xml
-from pptx.oxml.ns import nsdecls
 
 def create_presentation():
     prs = Presentation()
-
-    loop_xml = '''
-        <p:showPr xmlns:p="http://schemas.openxmlformats.org/presentationml/2006/main" loop="1"/>
-    '''
-    loop_element = parse_xml(loop_xml)
-    
-    presentationPr = prs.element.find('.//p:presentationPr', namespaces={'p': 'http://schemas.openxmlformats.org/presentationml/2006/main'})
-    if presentationPr is not None:
-        presentationPr.addnext(loop_element)
 
     today = datetime.now()
     tomorrow = today + timedelta(days=1)
@@ -23,13 +13,13 @@ def create_presentation():
         f'images/{today.strftime("%d-%m-%Y")}.png',
         f'images/{tomorrow.strftime("%d-%m-%Y")}.png',
         f'images/{today.strftime("%d-%m-%Y")}-fire.jpg',
-        # "images/4.png",
-        # "images/5.png",
-        # "images/6.png",
-        # "images/7.png",
-        # "images/8.png",
-        # "images/9.png",
-        # "images/10.png",
+        "images/4.png",
+        "images/5.png",
+        "images/6.png",
+        "images/7.png",
+        "images/8.png",
+        "images/9.png",
+        "images/10.png",
     ]
 
     for screenshot in screenshots:
