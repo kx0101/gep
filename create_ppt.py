@@ -15,7 +15,7 @@ def set_pres_repeat(prs):
 
     showPr_elements = presentationPr.findall(f'.//{{{p}}}showPr')
     if not showPr_elements:
-        showPr_element = etree.Element(f'{{{p}}}showPr', loop="1", restart="always")
+        showPr_element = etree.Element(f'{{{p}}}showPr', loop="true", restart="always")
         presentationPr.append(showPr_element)
     else:
         for showPr in showPr_elements:
@@ -77,7 +77,9 @@ def create_presentation():
 
         transition_xml = transition_xml_template
         transition_fragment = parse_xml(transition_xml)
+
         slide.element.append(transition_fragment)
+
         print(f"Transition applied to slide {i+1}")
 
     hide_last_slide(prs)
