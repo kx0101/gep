@@ -33,8 +33,20 @@ def hide_last_slide(prs):
     else:
         print("No slides to hide.")
 
+def remove_all_slides(prs):
+    xml_slides = prs.slides._sldIdLst
+    for slide_id in list(xml_slides):
+        xml_slides.remove(slide_id)
+
 def create_presentation():
-    prs = Presentation()
+    presentation_path = 'presentation.pptx'
+    
+    if os.path.exists(presentation_path):
+        prs = Presentation(presentation_path)
+        remove_all_slides(prs)
+    else:
+        prs = Presentation()
+    
     set_pres_repeat(prs)
 
     today = datetime.now()
@@ -83,7 +95,7 @@ def create_presentation():
         print(f"Transition applied to slide {i+1}")
 
     hide_last_slide(prs)
-    prs.save('presentation.pptx')
+    prs.save(presentation_path)
 
 if __name__ == "__main__":
     create_presentation()
