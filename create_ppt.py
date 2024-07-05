@@ -7,6 +7,7 @@ from lxml import etree
 import warnings
 import os
 
+
 def set_pres_repeat(prs):
     prs_part = prs.part
     prs_props_part = prs_part.part_related_by(RT.PRES_PROPS)
@@ -16,7 +17,8 @@ def set_pres_repeat(prs):
 
     showPr_elements = presentationPr.findall(f'.//{{{p}}}showPr')
     if not showPr_elements:
-        showPr_element = etree.Element(f'{{{p}}}showPr', loop="true", restart="always")
+        showPr_element = etree.Element(
+            f'{{{p}}}showPr', loop="true", restart="always")
         presentationPr.append(showPr_element)
     else:
         for showPr in showPr_elements:
@@ -24,6 +26,7 @@ def set_pres_repeat(prs):
             showPr.set("restart", "always")
 
     prs_props_part._blob = etree.tostring(presentationPr)
+
 
 def hide_last_slide(prs):
     slides = prs.slides
@@ -34,21 +37,22 @@ def hide_last_slide(prs):
     else:
         print("No slides to hide.")
 
+
 def create_presentation():
     warnings.filterwarnings("ignore", message="Duplicate name:")
     presentation_path = 'presentation.pptx'
-    
+
     if os.path.exists(presentation_path):
         prs = Presentation(presentation_path)
 
-        xml_slides = prs.slides._sldIdLst  
+        xml_slides = prs.slides._sldIdLst
         slide_ids = [slide_id for slide_id in xml_slides]
 
         for slide_id in slide_ids:
             xml_slides.remove(slide_id)
     else:
         prs = Presentation()
-    
+
     set_pres_repeat(prs)
 
     today = datetime.now()
@@ -85,7 +89,8 @@ def create_presentation():
 
         img_path = screenshot
         try:
-            img = slide.shapes.add_picture(img_path, Inches(0), Inches(0), width=Inches(10), height=Inches(7.5))
+            img = slide.shapes.add_picture(img_path, Inches(
+                0), Inches(0), width=Inches(10), height=Inches(7.5))
 
             left = int((Inches(10) - img.width) / 2)
             top = int((Inches(7.5) - img.height) / 2)
@@ -105,6 +110,7 @@ def create_presentation():
 
     hide_last_slide(prs)
     prs.save(presentation_path)
+
 
 if __name__ == "__main__":
     create_presentation()
