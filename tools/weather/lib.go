@@ -55,10 +55,6 @@ func createWeatherImage(url, filename string) {
 		log.Fatal(err)
 	}
 
-    if err := os.WriteFile(filename_GEP, buf, 0644); err != nil {
-        log.Fatal(err)
-    }
-
 	fmt.Printf("Screenshot saved as %s\n", filename)
 }
 

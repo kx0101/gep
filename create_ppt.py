@@ -67,7 +67,6 @@ def create_presentation():
         slide.element.insert(-1, xmlFragment)
 
     prs.save('presentation.pptx')
-    prs.save("C:\Users\Administrator\Desktop")
 
 if __name__ == "__main__":
     create_presentation()
