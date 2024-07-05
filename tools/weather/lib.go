@@ -15,7 +15,6 @@ var (
 	weatherTomorrow = "https://freemeteo.gr/kairos/aleksandroupoli/oriaia-provlepsi/aurio/?gid=736928&language=greek&country=greece"
 	weatherWeek     = "https://freemeteo.gr/kairos/aleksandroupoli/7-imeres/pinakas/?gid=736928&language=greek&country=greece"
 	today           = time.Now().Format("02-01-2006")
-	filename_GEP    = "C:\\GEP Data Downloader\\Downloaded Files\\weather"
 )
 
 func CreateWeatherImageForToday() {
