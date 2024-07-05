@@ -6,8 +6,6 @@ import (
 )
 
 func main() {
-	// tools.CleanUp()
-
 	var wg sync.WaitGroup
 	wg.Add(4)
 

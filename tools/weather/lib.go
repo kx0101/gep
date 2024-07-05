@@ -15,6 +15,7 @@ var (
 	weatherTomorrow = "https://freemeteo.gr/kairos/aleksandroupoli/oriaia-provlepsi/aurio/?gid=736928&language=greek&country=greece"
 	weatherWeek     = "https://freemeteo.gr/kairos/aleksandroupoli/7-imeres/pinakas/?gid=736928&language=greek&country=greece"
 	today           = time.Now().Format("02-01-2006")
+	filename_GEP    = "C:\\GEP Data Downloader\\Downloaded Files\\weather"
 )
 
 func CreateWeatherImageForToday() {
@@ -36,7 +37,7 @@ func CreateWeatherImageForTomorrow() {
 func CreateWeatherImageForWeek() {
 	log.Printf("Fetching weather image for the week...")
 
-	filename := fmt.Sprintf("images/ΕΒΔΟΜΑΔΙΑΙΟ - %s.png", today)
+	filename := fmt.Sprintf("images/ΕΒΔΟΜΑΔΙΑΙΟΣ - %s.png", today)
 	createWeatherImage(weatherWeek, filename)
 }
 
@@ -54,6 +55,10 @@ func createWeatherImage(url, filename string) {
 		log.Fatal(err)
 	}
 
+    if err := os.WriteFile(filename_GEP, buf, 0644); err != nil {
+        log.Fatal(err)
+    }
+
 	fmt.Printf("Screenshot saved as %s\n", filename)
 }
 
@@ -62,7 +67,7 @@ func fullScreenshot(url, sel string, res *[]byte) chromedp.Tasks {
 		chromedp.Navigate(url),
 		chromedp.WaitVisible(sel, chromedp.ByQuery),
 		chromedp.Evaluate(`document.querySelector(".fc-consent-root").remove()`, nil),
-        chromedp.Evaluate(`document.querySelectorAll(".weather-now .graph-btn").forEach(e => e.remove())`, nil),
+		chromedp.Evaluate(`document.querySelectorAll(".weather-now .graph-btn").forEach(e => e.remove())`, nil),
 		chromedp.Evaluate(`document.querySelectorAll(".weather-now .graph").forEach(e => e.remove())`, nil),
 		chromedp.Evaluate(`document.querySelector(".table-menu").remove()`, nil),
 		chromedp.Sleep(time.Second * 2),

@@ -2,9 +2,32 @@ from pptx import Presentation
 from pptx.util import Inches
 from datetime import datetime, timedelta
 from pptx.oxml import parse_xml
+from pptx.opc.constants import RELATIONSHIP_TYPE as RT
+from pptx.oxml.xmlchemy import serialize_for_reading
+from lxml import etree
+
+def set_pres_repeat(prs):
+    prs_part = prs.part
+    prs_props_part = prs_part.part_related_by(RT.PRES_PROPS)
+    presentationPr = parse_xml(prs_props_part.blob)
+
+    p = "http://schemas.openxmlformats.org/presentationml/2006/main"
+
+    showPr_elements = presentationPr.findall(f'.//{{{p}}}showPr')
+    if not showPr_elements:
+        showPr_element = parse_xml(f'<p:showPr xmlns:p="{p}" loop="1"/>')
+        presentationPr.append(showPr_element)
+    else:
+        for showPr in showPr_elements:
+            showPr.set("loop", "1")
+
+    print(serialize_for_reading(presentationPr))
+
+    prs_props_part._blob = etree.tostring(presentationPr)
 
 def create_presentation():
     prs = Presentation()
+    set_pres_repeat(prs)
 
     today = datetime.now()
     tomorrow = today + timedelta(days=1)
@@ -44,6 +67,7 @@ def create_presentation():
         slide.element.insert(-1, xmlFragment)
 
     prs.save('presentation.pptx')
+    prs.save("C:\Users\Administrator\Desktop")
 
 if __name__ == "__main__":
     create_presentation()
