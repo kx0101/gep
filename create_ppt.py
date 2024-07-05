@@ -10,40 +10,25 @@ def set_pres_repeat(prs):
     prs_part = prs.part
     prs_props_part = prs_part.part_related_by(RT.PRES_PROPS)
     presentationPr = parse_xml(prs_props_part.blob)
-    
+
     p = "http://schemas.openxmlformats.org/presentationml/2006/main"
-    
-    # Find or create showPr element
+
     showPr_elements = presentationPr.findall(f'.//{{{p}}}showPr')
     if not showPr_elements:
         showPr_element = etree.Element(f'{{{p}}}showPr', loop="1", restart="always")
         presentationPr.append(showPr_element)
     else:
         for showPr in showPr_elements:
-            showPr.set("loop", "1")
+            showPr.set("loop", "true")
             showPr.set("restart", "always")
-    
+
     prs_props_part._blob = etree.tostring(presentationPr)
-    
-    # Ensure slideShowPr is set to loop
-    view_props_part = prs_part.part_related_by(RT.VIEW_PROPS)
-    viewProps = parse_xml(view_props_part.blob)
-    slideShowPr_elements = viewProps.findall(f'.//{{{p}}}slideShowPr')
-    if not slideShowPr_elements:
-        slideShowPr_element = etree.Element(f'{{{p}}}slideShowPr', loop="1")
-        viewProps.append(slideShowPr_element)
-    else:
-        for slideShowPr in slideShowPr_elements:
-            slideShowPr.set("loop", "1")
-    
-    view_props_part._blob = etree.tostring(viewProps)
 
 def hide_last_slide(prs):
     slides = prs.slides
     if len(slides) > 0:
         last_slide = slides[-1]
-        last_slide_element = last_slide.element
-        last_slide_element.set('hidden', '1')
+        last_slide.element.set('show', '0')
         print("Last slide hidden successfully.")
     else:
         print("No slides to hide.")
@@ -92,9 +77,7 @@ def create_presentation():
 
         transition_xml = transition_xml_template
         transition_fragment = parse_xml(transition_xml)
-
         slide.element.append(transition_fragment)
-
         print(f"Transition applied to slide {i+1}")
 
     hide_last_slide(prs)
