@@ -58,11 +58,18 @@ def create_presentation():
         f'images/{today.strftime("%d-%m-%Y")}.png',
         f'images/{tomorrow.strftime("%d-%m-%Y")}.png',
         f'images/{today.strftime("%d-%m-%Y")}-fire.jpg',
+        'images/4.png',
+        'images/5.png',
+        'images/6.png',
+        'images/7.png',
+        'images/8.png',
+        'images/9.png',
+        'images/10.png',
         'images/placeholder.png'
     ]
 
     transition_xml_template = '''
-        <p:transition xmlns:p="http://schemas.openxmlformats.org/presentationml/2006/main" spd="slow" advance="after" advTm="1000">
+        <p:transition xmlns:p="http://schemas.openxmlformats.org/presentationml/2006/main" spd="slow" advance="after" advTm="5000">
             <p:wipe />
         </p:transition>
     '''
