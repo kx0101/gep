@@ -4,7 +4,6 @@ from datetime import datetime, timedelta
 from pptx.oxml import parse_xml
 from pptx.opc.constants import RELATIONSHIP_TYPE as RT
 from lxml import etree
-import warnings
 import os
 
 
@@ -38,18 +37,20 @@ def hide_last_slide(prs):
         print("No slides to hide.")
 
 
+def remove_all_slides(prs):
+    xml_slides = prs.slides._sldIdLst
+    slide_ids = [slide_id for slide_id in xml_slides]
+
+    for slide_id in slide_ids:
+        xml_slides.remove(slide_id)
+
+
 def create_presentation():
-    warnings.filterwarnings("ignore", message="Duplicate name:")
     presentation_path = 'presentation.pptx'
 
     if os.path.exists(presentation_path):
         prs = Presentation(presentation_path)
-
-        xml_slides = prs.slides._sldIdLst
-        slide_ids = [slide_id for slide_id in xml_slides]
-
-        for slide_id in slide_ids:
-            xml_slides.remove(slide_id)
+        remove_all_slides(prs)
     else:
         prs = Presentation()
 
