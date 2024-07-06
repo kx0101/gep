@@ -38,7 +38,7 @@ def hide_last_slide(prs):
 
 
 def create_presentation():
-    prs = Presentation("presentation.pptx")
+    prs = Presentation()
 
     set_pres_repeat(prs)
 
