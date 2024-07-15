@@ -42,14 +42,13 @@ def create_presentation():
 
     set_pres_repeat(prs)
 
-    today = datetime.now()
     tomorrow = datetime.now() + timedelta(days=1)
     twoDaysFromNow = datetime.now() + timedelta(days=2)
 
     screenshots = [
         f'images/{tomorrow.strftime("%d-%m-%Y")}.png',
         f'images/{twoDaysFromNow.strftime("%d-%m-%Y")}.png',
-        f'images/{today.strftime("%d-%m-%Y")}-fire.jpg',
+        f'images/{tomorrow.strftime("%d-%m-%Y")}-fire.jpg',
         'images/4.png',
         'images/5.png',
         'images/6.png',

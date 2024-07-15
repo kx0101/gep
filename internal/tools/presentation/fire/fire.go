@@ -14,7 +14,6 @@ import (
 
 var (
 	fireImageUrl = ""
-	today        = time.Now().Format("02/01/2006")
 )
 
 func CreateFireImage(wg *sync.WaitGroup) {
@@ -47,9 +46,10 @@ func GetFireImageUrl() (string, error) {
 		log.Fatalf("Error loading HTML: %v", err)
 	}
 
+	tomorrow := time.Now().AddDate(0, 0, 1).Format("02/01/2006")
 	fireImageSrc := ""
 	doc.Find("a.maps_tile").Each(func(i int, s *goquery.Selection) {
-		if s.AttrOr("data-sub-html", "") == today {
+		if s.AttrOr("data-sub-html", "") == tomorrow {
 			img := s.Find("img#myimage")
 			fireImageSrc, _ = img.Attr("src")
 		}
@@ -76,8 +76,7 @@ func DownloadAndSaveFireImage(fireImageUrl string) {
 		log.Fatalf("Error: received non-200 status code %d while fetching image", imgResponse.StatusCode)
 	}
 
-	today = time.Now().Format("02-01-2006")
-	filename := fmt.Sprintf("images/%s-fire.jpg", today)
+	filename := fmt.Sprintf("images/%s-fire.jpg", time.Now().AddDate(0, 0, 1).Format("02-01-2006"))
 
 	file, err := os.Create(filename)
 	if err != nil {
