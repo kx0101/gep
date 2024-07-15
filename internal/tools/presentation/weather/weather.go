@@ -32,8 +32,8 @@ func CreateWeatherImageForTwoDaysFromNow(wg *sync.WaitGroup) {
 
 	log.Printf("Fetching weather image for two days from now...")
 
-	tomorrow := time.Now().AddDate(0, 0, 2)
-	filename := fmt.Sprintf("images/%s.png", tomorrow.Format("02-01-2006"))
+	twoDaysFromNow := time.Now().AddDate(0, 0, 2)
+	filename := fmt.Sprintf("images/%s.png", twoDaysFromNow.Format("02-01-2006"))
 
 	CreateWeatherImage(weatherTwoDaysFromToday, filename)
 }
@@ -41,7 +41,8 @@ func CreateWeatherImageForTwoDaysFromNow(wg *sync.WaitGroup) {
 func CreateWeatherImageForWeek() {
 	log.Printf("Fetching weather image for the week...")
 
-	filename := fmt.Sprintf("images/ΕΒΔΟΜΑΔΙΑΙΟΣ - %s.png", today)
+	tomorrow := time.Now().AddDate(0, 0, 1)
+	filename := fmt.Sprintf("images/ΕΒΔΟΜΑΔΙΑΙΟΣ - %s.png", tomorrow.Format("02-01-2006"))
 	CreateWeatherImage(weatherWeek, filename)
 }
 
