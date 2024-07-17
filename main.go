@@ -1,20 +1,32 @@
 package main
 
 import (
-	"gep/tools"
-	"sync"
+	"flag"
+	"fmt"
+	"gep/internal/tools"
+	"log"
 )
 
 func main() {
-	var wg sync.WaitGroup
-	wg.Add(4)
+	fmt.Printf(`
+    GEP Internal Tools:
 
-	go tools.CreateFireImage(&wg)
-	go tools.CreateWeatherImageForToday(&wg)
-	go tools.CreateWeatherImageForTomorrow(&wg)
-	go tools.CreateWeatherImageForWeek(&wg)
 
-	wg.Wait()
+    1 - Generate fire, weather images and create the presentation.
+    2 - Generate weekly weather.
+    `)
+	fmt.Println()
 
-	tools.CreatePresentation()
+	option := flag.Int("tool", 1, "Select an option for which tool to use")
+	flag.Parse()
+
+	switch *option {
+	case 1:
+		tools.CreatePresentation()
+	case 2:
+		tools.CreateWeeklyWeather()
+	default:
+		log.Println("Invalid choice")
+		return
+	}
 }
