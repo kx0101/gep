@@ -66,6 +66,7 @@ var staticNotifications = []struct {
 	Notification Notification
 }{
 	{5, 45, Notification{"Εβδομαδιαίος Καιρός", "Τοποθετείς τον εβδομαδιαίο καιρό που έχει δημιουργηθεί από το βραδινό script (gep/images) στο common/GEP/ΧΑΡΙΖΟΠΟΥΛΟΣ"}},
+	{7, 50, Notification{"Έπαρση Σημαίας", "Σημαία, και το jockey στην τσέπη. Λάβαρα μετά την έπαρση"}},
 	{12, 0, Notification{"Σημερινές Υπηρεσίες", "Υπηρεσίες ΑΥΜΔ Μονάδων, Αξιωματικό πύλης/Μεσημβρίας, οδηγό επιφυλακής και Ν/Τ"}},
 	{15, 0, Notification{"Ετοίμασε τις υπηρεσίες για τον Συντονιστή", "Άλλαξε το έγγραφο με το δελτίο υπηρεσιών της ταξιαρχίας"}},
 	{18, 0, Notification{"Έλεγχος server room", "Κατεβαίνεις κάτω στο server room και checkareis αν είναι όλα ΟΚ"}},
@@ -76,7 +77,7 @@ var staticNotifications = []struct {
 	{21, 0, Notification{"Έλεγχος server room", "Κατεβαίνεις κάτω στο server room και checkareis αν είναι όλα ΟΚ"}},
 	{21, 10, Notification{"Αναφορά Συντονιστή", "Ετοίμασε την αναφορά του συντονιστή"}},
 	{22, 0, Notification{"Αλλαγή powerpoint", "Πας στο gep φάκελο στην επιφάνεια εργασίας του PC INTERNET και αφού ρυθμίσεις το loop στο powerpoint, το περνάς στο μαυρο usb"}},
-	{22, 45, Notification{"-1 ΚΣ", "Είσαι ήδη -1 ημέρες"}},
+	{22, 45, Notification{"-1 ΚΣ", "Είσαι ήδη -1 μέρα"}},
 }
 
 func adjustFlagTime(flagTime FlagTime) FlagTime {
@@ -119,7 +120,7 @@ func generateNotifications(now time.Time) []struct {
 		Notification Notification
 	}{
 		{cleaningHour, cleaningMinute, Notification{"Καθαριότητες Ταξιαρχίας", cleaningDescription}},
-		{flagHour, flagMinute, Notification{"Σημαία", "Υποστολή Σημαίας, κατεβάζουμε και λάβαρα"}},
+		{flagHour, flagMinute, Notification{"Σημαία", "Υποστολή Σημαίας, χωρίς jockey, κατεβάζουμε και λάβαρα"}},
 	}
 
 	allNotifications := append(staticNotifications, dynamicNotifications...)
@@ -233,10 +234,10 @@ func parseTimePart(part string) int {
 	return value
 }
 
-func Main() {
+func main() {
 	fmt.Println("Notification service started...")
 
-	ticker := time.NewTicker(1 * time.Second)
+	ticker := time.NewTicker(1 * time.Minute)
 	defer ticker.Stop()
 
 	for now := range ticker.C {

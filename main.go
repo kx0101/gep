@@ -7,7 +7,7 @@ import (
 	"log"
 )
 
-func main() {
+func Main() {
 	fmt.Printf(`
     GEP Internal Tools:
 
