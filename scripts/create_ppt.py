@@ -49,13 +49,13 @@ def create_presentation():
         f'images/{tomorrow.strftime("%d-%m-%Y")}.png',
         f'images/{twoDaysFromNow.strftime("%d-%m-%Y")}.png',
         f'images/{tomorrow.strftime("%d-%m-%Y")}-fire.jpg',
-        # 'images/4.png',
-        # 'images/5.png',
-        # 'images/6.png',
-        # 'images/7.png',
-        # 'images/8.png',
-        # 'images/9.png',
-        # 'images/10.png',
+        'images/4.png',
+        'images/5.png',
+        'images/6.png',
+        'images/7.png',
+        'images/8.png',
+        'images/9.png',
+        'images/10.png',
         'images/placeholder.png'
     ]
 
