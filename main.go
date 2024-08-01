@@ -17,7 +17,7 @@ func main() {
     3 - Notifications service for GEP guidance.
 
 
-    ** Default option: 1**
+    *Default option: 1
     `)
 	fmt.Println()
 

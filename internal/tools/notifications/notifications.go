@@ -15,7 +15,7 @@ var (
 func Start() {
 	fmt.Println("Notification service started...")
 
-	ticker := time.NewTicker(1 * time.Minute)
+	ticker := time.NewTicker(1 * time.Second)
 	defer ticker.Stop()
 
 	for now := range ticker.C {
@@ -29,6 +29,8 @@ func Start() {
 
 func isNotificationTime(now time.Time) (*Notification, bool) {
 	allNotifications := generateNotifications(now)
+
+    fmt.Println(allNotifications)
 
 	for _, entry := range allNotifications {
 		if now.Hour() == entry.Hour && now.Minute() == entry.Minute {

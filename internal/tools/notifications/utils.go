@@ -82,42 +82,42 @@ func generateCleaningDescription(weekday time.Weekday) string {
 }
 
 func getFlagTimeForDate(date time.Time) (int, int) {
-	isDST := isDaylightSavingTime(date)
+	timeDifference := calculateTimeDifference(date)
+	currentYear := date.Year()
 
 	flagSchedule := []struct {
 		Start, End time.Time
 		Time       FlagTime
 	}{
-		{time.Date(0, 1, 1, 0, 0, 0, 0, time.Local), time.Date(0, 1, 15, 23, 59, 59, 0, time.Local), adjustFlagTime(FlagTime{16, 50})},
-		{time.Date(0, 1, 16, 0, 0, 0, 0, time.Local), time.Date(0, 1, 31, 23, 59, 59, 0, time.Local), adjustFlagTime(FlagTime{17, 10})},
-		{time.Date(0, 2, 1, 0, 0, 0, 0, time.Local), time.Date(0, 2, 15, 23, 59, 59, 0, time.Local), adjustFlagTime(FlagTime{17, 25})},
-		{time.Date(0, 2, 16, 0, 0, 0, 0, time.Local), time.Date(0, 2, 29, 23, 59, 59, 0, time.Local), adjustFlagTime(FlagTime{17, 40})},
+		{time.Date(currentYear, 1, 1, 0, 0, 0, 0, time.Local), time.Date(currentYear, 1, 15, 23, 59, 59, 0, time.Local), adjustFlagTime(FlagTime{16, 50})},
+		{time.Date(currentYear, 1, 16, 0, 0, 0, 0, time.Local), time.Date(currentYear, 1, 31, 23, 59, 59, 0, time.Local), adjustFlagTime(FlagTime{17, 10})},
+		{time.Date(currentYear, 2, 1, 0, 0, 0, 0, time.Local), time.Date(currentYear, 2, 15, 23, 59, 59, 0, time.Local), adjustFlagTime(FlagTime{17, 25})},
+		{time.Date(currentYear, 2, 16, 0, 0, 0, 0, time.Local), time.Date(currentYear, 2, 29, 23, 59, 59, 0, time.Local), adjustFlagTime(FlagTime{17, 40})},
 
-		{time.Date(0, 3, 1, 0, 0, 0, 0, time.Local), time.Date(0, 3, 16, 0, 0, 0, 0, time.Local), adjustFlagTime(FlagTime{17, 55})},
-		{time.Date(0, 3, 16, 0, 0, 0, 0, time.Local), time.Date(0, 3, lastSundayOfMonth(3, date.Year()).Day(), 23, 59, 59, 0, time.Local), adjustFlagTime(FlagTime{18, 10})},
-		{time.Date(0, 3, lastSundayOfMonth(3, date.Year()).Day()+1, 0, 0, 0, 0, time.Local), time.Date(0, 3, 31, 23, 59, 59, 0, time.Local), adjustFlagTime(FlagTime{19, 10})},
+		{time.Date(currentYear, 3, 1, 0, 0, 0, 0, time.Local), time.Date(currentYear, 3, 16, 0, 0, 0, 0, time.Local), adjustFlagTime(FlagTime{17, 55})},
+		{time.Date(currentYear, 3, 16, 0, 0, 0, 0, time.Local), time.Date(currentYear, 3, lastSundayOfMonth(3, currentYear).Day(), 23, 59, 59, 0, time.Local), adjustFlagTime(FlagTime{18, 10})},
+		{time.Date(currentYear, 3, lastSundayOfMonth(3, currentYear).Day()+1, 0, 0, 0, 0, time.Local), time.Date(currentYear, 3, 31, 23, 59, 59, 0, time.Local), adjustFlagTime(FlagTime{19, 10})},
 
-		{time.Date(0, 4, 1, 0, 0, 0, 0, time.Local), time.Date(0, 4, 15, 23, 59, 59, 0, time.Local), adjustFlagTime(FlagTime{19, 25})},
-		{time.Date(0, 4, 16, 0, 0, 0, 0, time.Local), time.Date(0, 4, 30, 23, 59, 59, 0, time.Local), adjustFlagTime(FlagTime{19, 40})},
-		{time.Date(0, 5, 1, 0, 0, 0, 0, time.Local), time.Date(0, 5, 15, 23, 59, 59, 0, time.Local), adjustFlagTime(FlagTime{19, 50})},
-		{time.Date(0, 8, 1, 0, 0, 0, 0, time.Local), time.Date(0, 8, 15, 23, 59, 59, 0, time.Local), adjustFlagTime(FlagTime{20, 5})},
-		{time.Date(0, 6, 1, 0, 0, 0, 0, time.Local), time.Date(0, 6, 15, 23, 59, 59, 0, time.Local), adjustFlagTime(FlagTime{20, 15})},
-		{time.Date(0, 6, 16, 0, 0, 0, 0, time.Local), time.Date(0, 6, 30, 23, 59, 59, 0, time.Local), adjustFlagTime(FlagTime{20, 20})},
-		{time.Date(0, 7, 1, 0, 0, 0, 0, time.Local), time.Date(0, 7, 15, 23, 59, 59, 0, time.Local), adjustFlagTime(FlagTime{20, 20})},
-		{time.Date(0, 7, 16, 0, 0, 0, 0, time.Local), time.Date(0, 7, 31, 23, 59, 59, 0, time.Local), adjustFlagTime(FlagTime{20, 10})},
-		{time.Date(0, 8, 1, 0, 0, 0, 0, time.Local), time.Date(0, 8, 15, 23, 59, 59, 0, time.Local), adjustFlagTime(FlagTime{20, 0})},
-		{time.Date(0, 8, 16, 0, 0, 0, 0, time.Local), time.Date(0, 8, 31, 23, 59, 59, 0, time.Local), adjustFlagTime(FlagTime{19, 40})},
-		{time.Date(0, 9, 1, 0, 0, 0, 0, time.Local), time.Date(0, 9, 15, 23, 59, 59, 0, time.Local), adjustFlagTime(FlagTime{19, 15})},
-		{time.Date(0, 9, 16, 0, 0, 0, 0, time.Local), time.Date(0, 9, 30, 23, 59, 59, 0, time.Local), adjustFlagTime(FlagTime{18, 50})},
+		{time.Date(currentYear, 4, 1, 0, 0, 0, 0, time.Local), time.Date(currentYear, 4, 15, 23, 59, 59, 0, time.Local), adjustFlagTime(FlagTime{19, 25})},
+		{time.Date(currentYear, 4, 16, 0, 0, 0, 0, time.Local), time.Date(currentYear, 4, 30, 23, 59, 59, 0, time.Local), adjustFlagTime(FlagTime{19, 40})},
+		{time.Date(currentYear, 5, 1, 0, 0, 0, 0, time.Local), time.Date(currentYear, 5, 15, 23, 59, 59, 0, time.Local), adjustFlagTime(FlagTime{19, 50})},
+		{time.Date(currentYear, 6, 1, 0, 0, 0, 0, time.Local), time.Date(currentYear, 6, 15, 23, 59, 59, 0, time.Local), adjustFlagTime(FlagTime{20, 15})},
+		{time.Date(currentYear, 6, 16, 0, 0, 0, 0, time.Local), time.Date(currentYear, 6, 30, 23, 59, 59, 0, time.Local), adjustFlagTime(FlagTime{20, 20})},
+		{time.Date(currentYear, 7, 1, 0, 0, 0, 0, time.Local), time.Date(currentYear, 7, 15, 23, 59, 59, 0, time.Local), adjustFlagTime(FlagTime{20, 20})},
+		{time.Date(currentYear, 7, 16, 0, 0, 0, 0, time.Local), time.Date(currentYear, 7, 31, 23, 59, 59, 0, time.Local), adjustFlagTime(FlagTime{20, 10})},
+		{time.Date(currentYear, 8, 1, 0, 0, 0, 0, time.Local), time.Date(currentYear, 8, 15, 23, 59, 59, 0, time.Local), adjustFlagTime(FlagTime{20, 0})},
+		{time.Date(currentYear, 8, 16, 0, 0, 0, 0, time.Local), time.Date(currentYear, 8, 31, 23, 59, 59, 0, time.Local), adjustFlagTime(FlagTime{19, 40})},
+		{time.Date(currentYear, 9, 1, 0, 0, 0, 0, time.Local), time.Date(currentYear, 9, 15, 23, 59, 59, 0, time.Local), adjustFlagTime(FlagTime{19, 15})},
+		{time.Date(currentYear, 9, 16, 0, 0, 0, 0, time.Local), time.Date(currentYear, 9, 30, 23, 59, 59, 0, time.Local), adjustFlagTime(FlagTime{18, 50})},
 
-		{time.Date(0, 10, 1, 0, 0, 0, 0, time.Local), time.Date(0, 10, 16, 0, 0, 0, 0, time.Local), adjustFlagTime(FlagTime{18, 30})},
-		{time.Date(0, 10, 16, 0, 0, 0, 0, time.Local), time.Date(0, 10, lastSundayOfMonth(10, date.Year()).Day(), 23, 59, 59, 0, time.Local), adjustFlagTime(FlagTime{18, 05})},
-		{time.Date(0, 10, lastSundayOfMonth(10, date.Year()).Day()+1, 0, 0, 0, 0, time.Local), time.Date(0, 10, 31, 23, 59, 59, 0, time.Local), adjustFlagTime(FlagTime{17, 05})},
+		{time.Date(currentYear, 10, 1, 0, 0, 0, 0, time.Local), time.Date(currentYear, 10, 16, 0, 0, 0, 0, time.Local), adjustFlagTime(FlagTime{18, 30})},
+		{time.Date(currentYear, 10, 16, 0, 0, 0, 0, time.Local), time.Date(currentYear, 10, lastSundayOfMonth(10, currentYear).Day(), 23, 59, 59, 0, time.Local), adjustFlagTime(FlagTime{18, 05})},
+		{time.Date(currentYear, 10, lastSundayOfMonth(10, currentYear).Day()+1, 0, 0, 0, 0, time.Local), time.Date(0, 10, 31, 23, 59, 59, 0, time.Local), adjustFlagTime(FlagTime{17, 05})},
 
-		{time.Date(0, 11, 1, 0, 0, 0, 0, time.Local), time.Date(0, 11, 15, 23, 59, 59, 0, time.Local), adjustFlagTime(FlagTime{16, 50})},
-		{time.Date(0, 11, 16, 0, 0, 0, 0, time.Local), time.Date(0, 11, 30, 23, 59, 59, 0, time.Local), adjustFlagTime(FlagTime{16, 40})},
-		{time.Date(0, 12, 1, 0, 0, 0, 0, time.Local), time.Date(0, 12, 15, 23, 59, 59, 0, time.Local), adjustFlagTime(FlagTime{16, 35})},
-		{time.Date(0, 12, 16, 0, 0, 0, 0, time.Local), time.Date(0, 12, 31, 23, 59, 59, 0, time.Local), adjustFlagTime(FlagTime{16, 40})},
+		{time.Date(currentYear, 11, 1, 0, 0, 0, 0, time.Local), time.Date(currentYear, 11, 15, 23, 59, 59, 0, time.Local), adjustFlagTime(FlagTime{16, 50})},
+		{time.Date(currentYear, 11, 16, 0, 0, 0, 0, time.Local), time.Date(currentYear, 11, 30, 23, 59, 59, 0, time.Local), adjustFlagTime(FlagTime{16, 40})},
+		{time.Date(currentYear, 12, 1, 0, 0, 0, 0, time.Local), time.Date(currentYear, 12, 15, 23, 59, 59, 0, time.Local), adjustFlagTime(FlagTime{16, 35})},
+		{time.Date(currentYear, 12, 16, 0, 0, 0, 0, time.Local), time.Date(currentYear, 12, 31, 23, 59, 59, 0, time.Local), adjustFlagTime(FlagTime{16, 40})},
 	}
 
 	for _, entry := range flagSchedule {
@@ -125,10 +125,7 @@ func getFlagTimeForDate(date time.Time) (int, int) {
 			adjustedHour := entry.Time.Hour
 			adjustedMinute := entry.Time.Minute
 
-			if isDST && adjustedHour >= 18 {
-				adjustedHour += 1
-			}
-
+			adjustedHour += timeDifference
 			return adjustedHour, adjustedMinute
 		}
 	}
@@ -141,8 +138,8 @@ func adjustFlagTime(flagTime FlagTime) FlagTime {
 	newHour := flagTime.Hour
 
 	if newMinute < 0 {
-		newHour -= 1
 		newMinute += 60
+		newHour -= 1
 	}
 
 	if newHour < 0 {
@@ -152,11 +149,25 @@ func adjustFlagTime(flagTime FlagTime) FlagTime {
 	return FlagTime{Hour: newHour, Minute: newMinute}
 }
 
-func isDaylightSavingTime(date time.Time) bool {
+func calculateTimeDifference(date time.Time) int {
 	lastSundayMarch := lastSundayOfMonth(3, date.Year())
 	lastSundayOctober := lastSundayOfMonth(10, date.Year())
 
-	return date.After(lastSundayMarch) && date.Before(lastSundayOctober.Add(24*time.Hour))
+	lastDayOfMarch := time.Date(date.Year(), 3, 31, 0, 0, 0, 0, time.Local)
+	lastDayOfOctober := time.Date(date.Year(), 10, 31, 0, 0, 0, 0, time.Local)
+
+	timeChangedInMarch := date.After(lastSundayMarch) && date.Before(lastDayOfMarch)
+	timeChangedInOctober := date.After(lastSundayOctober) && date.Before(lastDayOfOctober)
+
+	if timeChangedInMarch {
+		return 1
+	}
+
+	if timeChangedInOctober {
+		return -1
+	}
+
+	return 0
 }
 
 func lastSundayOfMonth(month, year int) time.Time {

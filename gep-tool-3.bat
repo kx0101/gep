@@ -1,5 +1,4 @@
 @echo off
-:loop
-start /b "" "gep.exe" --tool 3
-timeout /t 10 /nobreak >nul
-goto loop
+cd C:\Users\Administrator\Desktop\gep\
+start gep.exe --tool 3
+set /p dummy=Press ENTER to exit...
