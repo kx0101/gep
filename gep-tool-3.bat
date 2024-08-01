@@ -1,3 +1,3 @@
 @echo off
-start /min "" "./notifications"
+start /min "" "notifications.exe"
 exit
