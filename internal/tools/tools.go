@@ -1,6 +1,7 @@
 package tools
 
 import (
+	"gep/internal/tools/notifications"
 	"gep/internal/tools/presentation/fire"
 	"gep/internal/tools/presentation/presentation"
 	"gep/internal/tools/presentation/weather"
@@ -22,4 +23,8 @@ func CreatePresentation() {
 
 func CreateWeeklyWeather() {
 	weather.CreateWeatherImageForWeek()
+}
+
+func StartNotificationsService() {
+	notifications.Start()
 }
