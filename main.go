@@ -14,6 +14,10 @@ func main() {
 
     1 - Generate fire, weather images and create the presentation.
     2 - Generate weekly weather.
+    3 - Notifications service for GEP guidance.
+
+
+    ** Default option: 1**
     `)
 	fmt.Println()
 
@@ -25,6 +29,8 @@ func main() {
 		tools.CreatePresentation()
 	case 2:
 		tools.CreateWeeklyWeather()
+	case 3:
+		tools.StartNotificationsService()
 	default:
 		log.Println("Invalid choice")
 		return
