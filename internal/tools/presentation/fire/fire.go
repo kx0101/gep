@@ -46,7 +46,8 @@ func GetFireImageUrl() (string, error) {
 		log.Fatalf("Error loading HTML: %v", err)
 	}
 
-	tomorrow := time.Now().AddDate(0, 0, 1).Format("02/01/2006")
+    // CHANGE
+	tomorrow := time.Now().AddDate(0, 0, 0).Format("02/01/2006")
 	fireImageSrc := ""
 	doc.Find("a.maps_tile").Each(func(i int, s *goquery.Selection) {
 		if s.AttrOr("data-sub-html", "") == tomorrow {

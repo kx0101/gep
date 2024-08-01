@@ -11,12 +11,12 @@ require (
 
 require (
 	github.com/andybalholm/cascadia v1.3.2 // indirect
-	github.com/chromedp/cdproto v0.0.0-20240202021202-6d0b6a386732 // indirect
+	github.com/chromedp/cdproto v0.0.0-20240721024200-dac8efcb39ce // indirect
 	github.com/chromedp/sysutil v1.0.0 // indirect
 	github.com/deckarep/gosx-notifier v0.0.0-20180201035817-e127226297fb // indirect
 	github.com/gobwas/httphead v0.1.0 // indirect
 	github.com/gobwas/pool v0.2.1 // indirect
-	github.com/gobwas/ws v1.3.2 // indirect
+	github.com/gobwas/ws v1.4.0 // indirect
 	github.com/hajimehoshi/go-mp3 v0.3.0 // indirect
 	github.com/hajimehoshi/oto v0.7.1 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
@@ -27,6 +27,6 @@ require (
 	golang.org/x/image v0.15.0 // indirect
 	golang.org/x/mobile v0.0.0-20190415191353-3e0bab5405d6 // indirect
 	golang.org/x/net v0.24.0 // indirect
-	golang.org/x/sys v0.19.0 // indirect
+	golang.org/x/sys v0.22.0 // indirect
 	gopkg.in/toast.v1 v1.0.0-20180812000517-0a84660828b2 // indirect
 )
